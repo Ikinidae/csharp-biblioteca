@@ -20,9 +20,8 @@
 
 //creo biblioteca
 Biblioteca biblioteca = new Biblioteca();
-biblioteca.StampaUtenti();
-biblioteca.StampaLibri();
-biblioteca.StampaDvd();
+biblioteca.Prestito();
+
 
 
 //classe biblioteca
@@ -50,39 +49,62 @@ public class Biblioteca
         Dvd.Add(new Dvd("Avatar", 2008, "Fantascienza", true, new Random().Next(0, 101), "Paolo Giordano", "9788804577027", 304));
         Dvd.Add(new Dvd("Shutter Island", 2013, "Thriller psicologico", false, new Random().Next(0, 101), "Dennis Lehane", "9788868366216", 436));
         Dvd.Add(new Dvd("Il miglio verde", 1988, "Thriller psicologico", true, new Random().Next(0, 101), "Thomas Harris", "9788804333746", 388));
+
     }
 
-    public void StampaUtenti()
-    {
-        Console.WriteLine("Gli utenti sono:");
-        foreach (Utente utente in Utenti)
-        {
-            Console.WriteLine(utente.Nome);
-        }
-    }
-
-    public void StampaLibri()
-    {
-        Console.WriteLine("I libri sono:");
-        foreach (Libro libro in Libri)
-        {
-            Console.WriteLine(libro.Titolo);
-        }
-    }
-
-    public void StampaDvd()
-    {
-        Console.WriteLine("I dvd sono:");
-        foreach (Dvd dvd in Dvd)
-        {
-            Console.WriteLine(dvd.Titolo);
-        }
-    }
 
     public void Prestito()
     {
-        Console.WriteLine("Inserisci il titolo o il codice del prodotto:");
-        string input = Console.ReadLine();
+        Console.WriteLine("Vuoi cercare un libro o un dvd? [libro/dvd] ");
+        string userInput = Console.ReadLine();
 
+        if (userInput == "libro")
+        {
+            Console.WriteLine("Scrivi il codice o il titolo del libro da cercare: ");
+            string userInputLibro = Console.ReadLine();
+
+            foreach (Libro libro in Libri)
+            {
+                if (userInputLibro == libro.Titolo || userInputLibro == libro.Isbn)
+                {
+                    if (libro.Stato == true)
+                    {
+                        Console.WriteLine("il libro ricercato è disponibile");
+                        break;
+                    }
+                    else
+                    {
+                        Console.WriteLine("il libro non è disponibile");
+                    }
+                }
+            }
+            
+        }
+        else if (userInput == "dvd")
+        {
+            Console.WriteLine("Scrivi il codice o il titolo del dvd da cercare: ");
+            string userInputDvd = Console.ReadLine();
+
+            foreach (Dvd dvd in Dvd)
+            {
+                if (userInputDvd == dvd.Titolo || userInputDvd == dvd.Codice)
+                {
+                    if (dvd.Stato == true)
+                    {
+                        Console.WriteLine("il dvd ricercato è disponibile");
+                        break;
+                    }
+                    else
+                    {
+                        Console.WriteLine("il dvd ricercato non è disponibile");
+                    }
+                }
+            }
+        }
+        else
+        {
+            Console.WriteLine("inserisci un valore corretto");
+            Prestito();
+        }
     }
 }
