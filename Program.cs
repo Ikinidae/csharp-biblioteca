@@ -17,9 +17,13 @@
 //L’utente deve poter eseguire delle ricerche per codice o per titolo e, eventualmente, effettuare dei prestiti registrando il periodo (Dal/Al) del prestito e il documento.
 //Deve essere possibile effettuare la ricerca dei prestiti dato nome e cognome di un utente.
 
+//creo biblioteca
+Biblioteca biblioteca = new Biblioteca();
+biblioteca.StampaUtenti();
 
 
 //classe utente
+
 public class Utente
 {
     //properties
@@ -97,9 +101,25 @@ public class Dvd : Documento
 //classe biblioteca
 public class Biblioteca
 {
+    //properties
+    public List<Utente> Utenti { get; }
+
     //costruttore
     public Biblioteca()
     {
-        List<Utente> utenti = new List<Utente>();
+        Utenti = new List<Utente>();
+        Utenti.Add(new Utente("Rossi", "Paolo", "paolorossi@gmail.com", 334303045));
+        Utenti.Add(new Utente("Arrigoni", "Luca", "lucaarrigoni@gmail.com", 334364045));
+        Utenti.Add(new Utente("Elia", "Federica", "federicaelia@gmail.com", 331324045));
+
+    }
+
+    public void StampaUtenti()
+    {
+        Console.WriteLine("Gli utenti sono:");
+        foreach (Utente utente in Utenti)
+        {
+            Console.WriteLine(utente.Nome);
+        }
     }
 }
