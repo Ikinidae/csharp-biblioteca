@@ -21,6 +21,7 @@
 //creo biblioteca
 Biblioteca biblioteca = new Biblioteca();
 biblioteca.Prestito();
+biblioteca.RicercaPrestiti();
 
 
 
@@ -31,6 +32,8 @@ public class Biblioteca
     public List<Utente> Utenti { get; }
     public List<Libro> Libri { get; }
     public List<Dvd> Dvd { get; }
+    public List<Prestito> Prestiti { get; }
+
 
     //costruttore
     public Biblioteca()
@@ -50,6 +53,10 @@ public class Biblioteca
         Dvd.Add(new Dvd("Shutter Island", 2013, "Thriller psicologico", false, new Random().Next(0, 101), "Dennis Lehane", "9788868366216", 436));
         Dvd.Add(new Dvd("Il miglio verde", 1988, "Thriller psicologico", true, new Random().Next(0, 101), "Thomas Harris", "9788804333746", 388));
 
+        Prestiti = new List<Prestito>();
+        Prestiti.Add(new Prestito("Il silenzio degli innocenti", "Federica Elia", "05/11/22", "07/11/22"));
+        Prestiti.Add(new Prestito("Mannaggia buddha elettrico", "Federica Elia", "05/11/22", "07/11/22"));
+        Prestiti.Add(new Prestito("Shutter Island", "Sandro Ficini", "05/11/22", "07/11/22"));
     }
 
 
@@ -70,6 +77,7 @@ public class Biblioteca
                     if (libro.Stato == true)
                     {
                         Console.WriteLine("il libro ricercato è disponibile");
+                        EffettuaPrestito(userInputLibro);
                         break;
                     }
                     else
@@ -92,6 +100,7 @@ public class Biblioteca
                     if (dvd.Stato == true)
                     {
                         Console.WriteLine("il dvd ricercato è disponibile");
+                        EffettuaPrestito(userInputDvd);
                         break;
                     }
                     else
@@ -105,6 +114,55 @@ public class Biblioteca
         {
             Console.WriteLine("inserisci un valore corretto");
             Prestito();
+        }
+    }
+
+    public void EffettuaPrestito(string userInputDoc)
+    {
+        Console.WriteLine("Vuoi prenderlo in prestito? [si/no]");
+        string userDocPrestito = Console.ReadLine();
+        if (userDocPrestito == "si")
+        {
+            Console.WriteLine("Inserisci il tuo nome e cognome");
+            string nomeUser = Console.ReadLine();
+            Console.WriteLine("Inserisci la data di inizio prestito");
+            string inizioPrestito = Console.ReadLine();
+            Console.WriteLine("Inserisci la data di fine prestito");
+            string finePrestito = Console.ReadLine();
+            Prestito prestito = new Prestito(userInputDoc, nomeUser, inizioPrestito, finePrestito);
+            Console.WriteLine("L'utente " + prestito.NomeUtente + " ha effettuato il prestito di: " + prestito.Nome + " dal: " + prestito.InizioPrestito + " al: " + prestito.FinePrestito);
+            Prestiti.Add(prestito);
+        }
+        else
+        {
+            Prestito();
+        }
+    }
+
+    public void RicercaPrestiti ()
+    {
+        Console.WriteLine("Stai cercando i prestiti associati a quale utente? Inserire nome e cognome");
+        string inputPrestito = Console.ReadLine();
+        bool presente = false;
+        foreach (Prestito prestito in Prestiti)
+        {
+            if (inputPrestito == prestito.NomeUtente)
+            {
+                presente = true;
+            }
+
+        }
+        if (presente == true)
+        {
+            Console.WriteLine("I prestiti associati all'utente selezionato sono:");
+            foreach (Prestito prestito in Prestiti)
+            {
+                Console.WriteLine(prestito.Nome + ", in prestito dal: " + prestito.InizioPrestito + " al: " + prestito.FinePrestito);
+            }
+        }
+        else
+        {
+            Console.WriteLine("Non sono presenti prestiti associati all'utente richiesto");
         }
     }
 }
