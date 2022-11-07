@@ -20,7 +20,7 @@
 
 //creo biblioteca
 Biblioteca biblioteca = new Biblioteca();
-biblioteca.Prestito();
+//biblioteca.Prestito();
 biblioteca.RicercaPrestiti();
 
 
@@ -157,7 +157,10 @@ public class Biblioteca
             Console.WriteLine("I prestiti associati all'utente selezionato sono:");
             foreach (Prestito prestito in Prestiti)
             {
-                Console.WriteLine(prestito.Nome + ", in prestito dal: " + prestito.InizioPrestito + " al: " + prestito.FinePrestito);
+                if (inputPrestito == prestito.NomeUtente)
+                {
+                    Console.WriteLine(prestito.Nome + ", in prestito dal: " + prestito.InizioPrestito + " al: " + prestito.FinePrestito);
+                }
             }
         }
         else
